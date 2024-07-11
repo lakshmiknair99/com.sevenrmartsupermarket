@@ -1,0 +1,11 @@
+<suite name="Regressionrun">
+	<test name="sampletest">
+		<listeners>
+			<listener
+				class-name="com.sevenrmartsupermarket.listeners.ExtentReporter"></listener>
+		</listeners>
+		<classes>
+			<class name="com.sevenrmartsupermarket.tests.AdminUsersTest"></class>
+		</classes>
+	</test>
+</suite>
