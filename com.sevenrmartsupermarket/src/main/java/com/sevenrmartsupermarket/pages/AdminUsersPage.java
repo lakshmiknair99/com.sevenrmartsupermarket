@@ -19,11 +19,12 @@ public class AdminUsersPage {
 
 	WebDriver driver;
 
-	PageUtility pageutility = new PageUtility(driver);
-	WaitUtility waitutility = new WaitUtility(driver);
+	PageUtility pageutility;
+	WaitUtility waitutility;
 	GeneralUtility generalutility = new GeneralUtility();
+	JavascriptExecutor js;
 
-	@FindBy(xpath = "//div[@class=\"content-header\"]//h1")
+	@FindBy(xpath = "//div[@class='content-header']//h1")
 	private WebElement adminUserHeader;
 	@FindBy(xpath = "//a[@class='btn btn-rounded btn-danger']")
 	private WebElement newButton;
@@ -54,22 +55,25 @@ public class AdminUsersPage {
 	@FindBy(xpath = "//button[@class='btn btn-block-sm btn-info' and @name='Update']")
 	private WebElement updateButton;
 	@FindBy(xpath = "//button[@name='Search']")
-	WebElement searchSubmitBtn;
+	private WebElement searchSubmitBtn;
 	@FindBy(xpath = "//table[@class='table table-bordered table-hover table-sm']//tbody")
-	WebElement tableRow;
+	private WebElement tableRow;
 	@FindBy(xpath = "//label[@for='username']//following::input[@id='un']")
-	WebElement searchUserNameField;
+	private WebElement searchUserNameField;
 	@FindBy(xpath = "//label[@for='user_type']//following::select[@id='ut']")
-	WebElement searchUserTypeDrpDown;
+	private WebElement searchUserTypeDrpDown;
 	@FindBy(xpath = "//span[contains(text(), 'Next')]")
-	WebElement nextPageLink;
+	private WebElement nextPageLink;
 	@FindBy(xpath = "//a[@class='btn btn-rounded btn-warning']")
-	WebElement resetBtn;
+	private WebElement resetBtn;
 	@FindBy(xpath = "//table[@class='table table-bordered table-hover table-sm']//tbody//tr[1]//td[3]//span")
-	WebElement tableStatusBtn;
+	private WebElement tableStatusBtn;
+	@FindBy(xpath = "//table[@class='table table-bordered table-hover table-sm']//tbody//tr[1]//td[1]")
+	private WebElement frstTableUsername;
 
 	public AdminUsersPage(WebDriver driver) {
 		this.driver = driver;
+		this.js = (JavascriptExecutor) driver;
 		PageFactory.initElements(driver, this);
 	}
 
@@ -77,8 +81,9 @@ public class AdminUsersPage {
 		return adminUserHeader.getText();
 	}
 
-	public void clickOnNewButton() {
+	public AdminUsersPage clickOnNewButton() {
 		newButton.click();
+		return this;
 	}
 
 	public void clickOnSearchButton() {
@@ -94,6 +99,7 @@ public class AdminUsersPage {
 	}
 
 	public void selectUserType(String value) {
+		pageutility=new PageUtility(driver);
 		pageutility.select_Value(userTypeSelectDrpDown, value);
 	}
 
@@ -102,6 +108,7 @@ public class AdminUsersPage {
 	}
 
 	public void selectSearchUserType(String value) {
+		pageutility=new PageUtility(driver);
 		pageutility.select_Value(searchUserTypeDrpDown, value);
 	}
 
@@ -144,11 +151,12 @@ public class AdminUsersPage {
 		updateButton.click();
 	}
 
-	public void createNewAdminUser(String userName, String password, String userType) {
+	public AdminUsersPage createNewAdminUser(String userName, String password, String userType) {
 		enterUsername(userName);
 		enterPassword(password);
 		selectUserType(userType);
 		clickOnSaveBtn();
+		return this;
 	}
 
 	public void deleteNewUser() {
@@ -172,7 +180,7 @@ public class AdminUsersPage {
 		return tUserType.getText();
 	}
 
-	public void clickOnTableStatusElement(String userName) {
+	public AdminUsersPage clickOnTableStatusElement(String userName) {
 		List<String> names = new ArrayList<String>();
 		names = generalutility.get_TextofElements(tableNames);
 		int index = 0;
@@ -185,6 +193,7 @@ public class AdminUsersPage {
 		WebElement tableUserStatus = driver.findElement(By.xpath(
 				"//table[@class='table table-bordered table-hover table-sm']//tbody//tr[" + index + "]//td[3]//span"));
 		tableUserStatus.click();
+		return this;
 
 	}
 
@@ -245,6 +254,8 @@ public class AdminUsersPage {
 	}
 
 	public void clickOnSearchSubmitButton() {
+		waitutility = new WaitUtility(driver);
+		waitutility.waitForElementToBeClickable(searchSubmitBtn, 30);
 		searchSubmitBtn.click();
 	}
 
@@ -267,12 +278,6 @@ public class AdminUsersPage {
 		return tableRow.getText();
 	}
 
-	public void clickOnNextPage() {
-
-		pageutility.scrollAndClick(nextPageLink);
-
-	}
-
 	public void clickOnResetButton() {
 		resetBtn.click();
 	}
@@ -289,6 +294,16 @@ public class AdminUsersPage {
 			return false;
 		}
 
+	}
+
+	public void clickOnNextPageBtn() throws InterruptedException {
+		js.executeScript("arguments[0].scrollIntoView();", nextPageLink);
+		Thread.sleep(5000);
+		nextPageLink.click();
+	}
+
+	public String getFirstTableUsername() {
+		return frstTableUsername.getText();
 	}
 
 }

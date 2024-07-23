@@ -31,6 +31,7 @@ public class Base {
 			
 			FileInputStream fis=new FileInputStream(Constants.CONFIG_FILE_PATH);
 			properties.load(fis);
+			
 		}
 		catch (Exception e)
 		{
@@ -84,7 +85,4 @@ public class Base {
 	}
 
 	
-	
-
-
 }

@@ -27,6 +27,7 @@ public class WaitUtility {
 		wait=new WebDriverWait(driver, Duration.ofSeconds(time));
 		wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpath)));
 	}
+
 	
 	
 }

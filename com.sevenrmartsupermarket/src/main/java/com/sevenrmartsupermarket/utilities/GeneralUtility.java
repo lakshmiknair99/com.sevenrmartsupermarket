@@ -2,6 +2,7 @@ package com.sevenrmartsupermarket.utilities;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import org.openqa.selenium.WebElement;
 
@@ -23,15 +24,18 @@ public class GeneralUtility {
 		}
 		return datas;
 	}
-	
-	
-	public static String get_RandomFirstName()
-	{
-		Faker faker=new Faker();
+
+	public static String get_RandomFirstName() {
+		Faker faker = new Faker();
 		return faker.name().firstName();
 	}
-	public boolean is_TextPresent(WebElement element, String expectedData)
-	{
+
+	 public static String get_RandomSentence() {
+	        Faker faker = new Faker(new Locale("en-US"));
+	        return faker.lorem().sentence();
+	    }
+
+	public boolean is_TextPresent(WebElement element, String expectedData) {
 		return element.getText().contains(expectedData);
 	}
 

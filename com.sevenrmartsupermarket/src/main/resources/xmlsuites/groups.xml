@@ -8,7 +8,7 @@
 		<groups>
 			<run>
 				<include name="smoke"></include>
-				<include name="regression"></include>
+				<include name="sanity"></include>
 			</run>
 		</groups>
 		<classes>

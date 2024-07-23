@@ -21,7 +21,7 @@ public class PageUtility {
 
 	public PageUtility(WebDriver driver) {
 		this.driver = driver;
-		js = (JavascriptExecutor) driver;
+		this.js = (JavascriptExecutor) driver;
 	}
 
 	public void mouseMove(WebElement element) {
@@ -51,6 +51,10 @@ public class PageUtility {
 			js.executeScript("window.scrollBy(0," + index + ")");
 			index = index + 3;
 		}
+	}
+	
+	public void scrollTo_Element(WebElement element) {
+		js.executeScript("arguments[0].scrollIntoView();", element);
 	}
 
 	public boolean isClicked(WebElement element) {

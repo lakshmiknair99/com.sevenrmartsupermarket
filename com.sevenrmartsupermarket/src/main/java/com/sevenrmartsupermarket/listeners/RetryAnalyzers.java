@@ -7,7 +7,7 @@ import com.relevantcodes.extentreports.model.ITest;
 
 public class RetryAnalyzers implements IRetryAnalyzer {
 	int counter = 0;
-	int retryLimit = 2;
+	int retryLimit = 3;
 
 	@Override
 	public boolean retry(ITestResult result) {
